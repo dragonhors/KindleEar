@@ -33,7 +33,7 @@ class Novelbase(BaseUrlBook):
     tagAttr = {'id': 'readerlist'}
 
     # 单本书章节限制
-    limit = 100
+    limit = 1000
 
     def ParseFeedUrls(self):
         urls = []
