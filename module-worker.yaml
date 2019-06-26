@@ -1,4 +1,4 @@
-application: kindle2017
+application: kindleear
 version: 1
 module: worker
 runtime: python27
