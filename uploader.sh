@@ -63,6 +63,6 @@ then
     sed -i "s/^DOMAIN = \"http\(\|s\):\/\/.*\.appspot\.com\/\"/DOMAIN = \"http:\/\/$appid\.appspot\.com\/\"/g" ./config.py
 fi
 
-#更新KindleEar执行系统
+#更新KindleEar执行系统配置？
 appcfg.py update app.yaml module-worker.yaml --no_cookie --noauth_local_webserver
 appcfg.py update . --no_cookie --noauth_local_webserver
