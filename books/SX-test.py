@@ -16,15 +16,15 @@ class sxtest(BaseFeedBook):
     title = u'圣墟test' # 设定标题
     __author__ = u'辰东' # 设定作者
     description = u'在破败中崛起，在寂灭中复苏。' # 设定简介
-    #language = 'en' # 设定语言
+    language = 'cn' # 设定语言
 
-    #coverfile = 'cv_chinadaily.jpg' # 设定封面图片
-    #mastheadfile = 'mh_chinadaily.gif' # 设定标头图片
+    coverfile = 'cv_chinadaily.jpg' # 设定封面图片
+    mastheadfile = 'mh_chinadaily.gif' # 设定标头图片
 
     # 指定要提取的包含文章列表的主题页面链接
     # 每个主题是包含主题名和主题页面链接的元组
     feeds = [
-        (u'小说圣墟', 'https://www.xbiquge6.com/74_74821/')
+        (u'修真', 'https://www.xbiquge6.com/74_74821/')
           ]
 
     page_encoding = 'utf-8' # 设定待抓取页面的页面编码
