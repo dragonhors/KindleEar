@@ -23,7 +23,9 @@ class sxtest(BaseFeedBook):
 
     # 指定要提取的包含文章列表的主题页面链接
     # 每个主题是包含主题名和主题页面链接的元组
-    feeds = 'https://www.xbiquge6.com/74_74821/'
+    feeds = [
+        (u'小说圣墟', 'https://www.xbiquge6.com/74_74821/')
+          ]
 
     page_encoding = 'utf-8' # 设定待抓取页面的页面编码
     fulltext_by_readability = False # 设定手动解析网页
