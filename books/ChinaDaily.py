@@ -37,8 +37,8 @@ class ChinaDaily(BaseFeedBook):
         dict(name='div', id='Content'),
     ]
 
-    max_articles_per_feed = 40 # 设定每个主题下要最多可抓取的文章数量
-    oldest_article = 1 # 设定文章的时间范围。小于等于365则单位为天，否则单位为秒，0为不限制。
+    max_articles_per_feed =40 # 设定每个主题下要最多可抓取的文章数量
+    oldest_article =1 # 设定文章的时间范围。小于等于365则单位为天，否则单位为秒，0为不限制。
 
     # 提取每个主题页面下所有文章URL
     def ParseFeedUrls(self):
@@ -49,8 +49,8 @@ class ChinaDaily(BaseFeedBook):
             topic, url = feed[0], feed[1]
             # 把抽取每个主题页面文章链接的任务交给自定义函数ParsePageContent()
             self.ParsePageContent(topic, url, urls, count=0)
-        print urls
-        exit(0)
+        #print urls             #这句代码干什么的？调试用？
+        #exit(0)                #也是调试代码？
         # 返回提取到的所有文章列表
         return urls
 
