@@ -4,8 +4,8 @@
 KindleEar配置文件，请务必修改开始两个配置（如果使用uploader，则uploader自动帮你修改）
 """
 
-SRC_EMAIL = "001@mxhtest.com"  #Your gmail account for sending mail to Kindle
-DOMAIN = "http://127.0.0.1/" #Your domain of app
+SRC_EMAIL = "mxhsepco3@gmail.com"  #Your gmail account for sending mail to Kindle
+DOMAIN = "http://kindleear.appspot.com/" #Your domain of app
 
 TIMEZONE = 8  #Default timezone, you can modify it in webpage after deployed
 
