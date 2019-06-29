@@ -119,6 +119,39 @@ class ShengXu_Test(BaseFeedBook):
         # 如果设定时间范围为0，文章没超出设定时间范围（或没有发布时间），则返回False
         return False
 
+
+    # 清理文章URL附带字符
+    def processtitle(self, title):
+        return title.replace(u' - Chinadaily.com.cn', '')
+
+    # 在文章内容被正式处理前做一些预处理
+    def preprocess(self, content):
+        # 将页面内容转换成BeatifulSoup对象
+        soup = BeautifulSoup(content, 'lxml')
+        # 调用处理内容分页的自定义函数SplitJointPagination()
+        content = self.SplitJointPagination(soup)
+        # 返回预处理完成的内容
+        return unicode(content)
+
+    # 此函数负责处理文章内容页面的翻页
+    def SplitJointPagination(self, soup):
+        # 如果文章内容有下一页则继续抓取下一页
+        next = soup.find(name='a', string='Next')
+        if next:
+            # 含文章正文的标签
+            tag = dict(name='div', id='Content')
+            # 获取下一页的内容
+            result = self.GetResponseContent(next.get('href'))
+            post = BeautifulSoup(result.content, 'lxml')
+            # 将之前的内容合并到当前页面
+            soup = BeautifulSoup(unicode(soup.find(**tag)), 'html.parser')
+            soup.contents[0].unwrap()
+            post.find(**tag).append(soup)
+            # 继续处理下一页
+            return self.SplitJointPagination(post)
+        # 如果有翻页，返回拼接的内容，否则直接返回传入的​内容
+        return soup
+
     # 此自定义函数负责请求传给它的链接并返回响应内容
     def GetResponseContent(self, url):
         opener = URLOpener(self.host, timeout=self.timeout, headers=self.extra_header)

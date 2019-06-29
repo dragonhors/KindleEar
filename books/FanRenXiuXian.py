@@ -14,16 +14,13 @@ def getBook():
 class Fanren2(BaseFeedBook):
     # 设定生成电子书的元数据
     title = u'003.凡人修仙传仙界篇'                   # 设定订阅项目显示标题
-    __author__ = u'辰东'                  # 设定作者，目前未用到
-    description = u'来自新笔趣阁'       # 设定简介，订阅项目上显示
+    __author__ = u'妄语'                  # 设定作者，目前未用到
+    description = u'妄语'       # 设定简介，订阅项目上显示
     language = 'zh-cn'                    # 设定语言
 
     coverfile = 'cv_Fanren.jpg' # 设定封面图片
     mastheadfile = 'mh_novelbook.gif' # 设定标头图片
-    
-    feed_encoding = 'utf-8' #添加这两行实测无作用，可能前面基类已定义了吧
-    page_encoding = 'utf-8'    
-    
+      
     # 指定要提取的包含文章列表的主题页面链接
     # 每个主题是包含主题名和主题页面链接的元组
     feeds = [
