@@ -14,4 +14,4 @@ class AJin(CartoonMadBaseBook):
     page_encoding       = 'big5'
     mastheadfile        = 'mh_default.gif'
     coverfile           = 'cv_bound.jpg'
-    feeds               = [(u'[漫画]亚人', 'http://www.cartoonmad.com/comic/3572.html')]
+    feeds               = [(u'[漫画]亚人', 'https://www.cartoonmad.com/comic/3572.html')]

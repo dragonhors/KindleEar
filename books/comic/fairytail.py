@@ -14,4 +14,4 @@ class FairyTail(CartoonMadBaseBook):
     page_encoding       = 'big5'
     mastheadfile        = 'mh_default.gif'
     coverfile           = 'cv_bound.jpg'
-    feeds               = [(u'[漫画]妖精的尾巴', 'http://www.cartoonmad.com/comic/1153.html')]
+    feeds               = [(u'[漫画]妖精的尾巴', 'https://www.cartoonmad.com/comic/1153.html')]

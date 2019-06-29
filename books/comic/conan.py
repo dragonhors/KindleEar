@@ -14,4 +14,4 @@ class Conan(CartoonMadBaseBook):
     page_encoding       = 'big5'
     mastheadfile        = 'mh_default.gif'
     coverfile           = 'cv_bound.jpg'
-    feeds               = [(u'[漫画]名侦探柯南', 'http://www.cartoonmad.com/comic/1066.html')]
+    feeds               = [(u'[漫画]名侦探柯南', 'https://www.cartoonmad.com/comic/1066.html')]

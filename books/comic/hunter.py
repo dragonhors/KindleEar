@@ -14,4 +14,4 @@ class Hunter(CartoonMadBaseBook):
     page_encoding       = 'big5'
     mastheadfile        = 'mh_default.gif'
     coverfile           = 'cv_bound.jpg'
-    feeds               = [(u'[漫画]全职猎人', 'http://www.cartoonmad.com/comic/1155.html')]
+    feeds               = [(u'[漫画]全职猎人', 'https://www.cartoonmad.com/comic/1155.html')]

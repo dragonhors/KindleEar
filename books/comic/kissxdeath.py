@@ -14,4 +14,4 @@ class KissXDeath(CartoonMadBaseBook):
     page_encoding       = 'big5'
     mastheadfile        = 'mh_default.gif'
     coverfile           = 'cv_bound.jpg'
-    feeds               = [(u'[漫画]KissXDeath', 'http://www.cartoonmad.com/comic/4329.html')]
+    feeds               = [(u'[漫画]KissXDeath', 'https://www.cartoonmad.com/comic/4329.html')]
