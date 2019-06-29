@@ -15,7 +15,7 @@ class ShengXu_Test(BaseFeedBook):
     # 设定生成电子书的元数据
     title = u'001.圣墟'                   # 设定订阅项目显示标题
     __author__ = u'辰东'                  # 设定作者，目前未用到
-    description = u'来自新笔趣阁'         # 设定简介，订阅项目上显示
+    description = u'辰东'         # 设定简介，订阅项目上显示
     language = 'zh-cn'                    # 设定语言
 
     coverfile = 'cv_shengxu.jpg' # 设定封面图片
