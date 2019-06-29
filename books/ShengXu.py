@@ -15,7 +15,7 @@ class ShengXu_Test(BaseFeedBook):
     # 设定生成电子书的元数据
     title = u'001.圣墟'                   # 设定订阅项目显示标题
     __author__ = u'辰东'                  # 设定作者，目前未用到
-    description = u'来自新笔趣阁'       # 设定简介，订阅项目上显示
+    description = u'来自新笔趣阁'         # 设定简介，订阅项目上显示
     language = 'zh-cn'                    # 设定语言
 
     coverfile = 'cv_shengxu.jpg' # 设定封面图片
@@ -32,8 +32,7 @@ class ShengXu_Test(BaseFeedBook):
 
     # 设定内容页需要保留的标签
     keep_only_tags = [
-        dict(name='div', id='info'),
-        dict(name='dd'),
+        dict(name='h1'),
         dict(name='div',id='content'),
     ]
 
@@ -67,7 +66,6 @@ class ShengXu_Test(BaseFeedBook):
 
             for ttt in items:
                 ccc += 1
-
 
             # 循环处理每个文章条目
             for item in items:
@@ -118,7 +116,6 @@ class ShengXu_Test(BaseFeedBook):
                 return True
         # 如果设定时间范围为0，文章没超出设定时间范围（或没有发布时间），则返回False
         return False
-
 
     # 清理文章URL附带字符
     def processtitle(self, title):

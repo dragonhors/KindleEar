@@ -8,10 +8,10 @@ from bs4 import BeautifulSoup # 导入BeautifulSoup处理模块
 
 # 返回此脚本定义的类名
 def getBook():
-    return Fanren2
+    return Fanren_Test
 
 # 继承基类BaseFeedBook
-class Fanren2(BaseFeedBook):
+class Fanren_Test(BaseFeedBook):
     # 设定生成电子书的元数据
     title = u'003.凡人修仙传仙界篇'                   # 设定订阅项目显示标题
     __author__ = u'妄语'                  # 设定作者，目前未用到
@@ -24,7 +24,7 @@ class Fanren2(BaseFeedBook):
     # 指定要提取的包含文章列表的主题页面链接
     # 每个主题是包含主题名和主题页面链接的元组
     feeds = [
-        (u'凡人修仙传仙界篇', 'https://www.xbiquge6.com/1_1203/'),
+        (u'凡人修仙', 'https://www.xbiquge6.com/1_1203/'),
     ]
 
     page_encoding = 'utf-8' # 设定待抓取页面的页面编码
@@ -32,7 +32,6 @@ class Fanren2(BaseFeedBook):
 
     # 设定内容页需要保留的标签
     keep_only_tags = [
-        #dict(name='div', id='info'),
         dict(name='h1'),
         dict(name='div',id='content'),
     ]
