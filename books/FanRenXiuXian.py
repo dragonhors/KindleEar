@@ -32,7 +32,7 @@ class Fanren_Test(BaseFeedBook):
 
     # 设定内容页需要保留的标签
     keep_only_tags = [
-        dict(name='h1'),
+        #dict(name='h1'),
         dict(name='div',id='content'),
     ]
 
@@ -46,24 +46,22 @@ class Fanren_Test(BaseFeedBook):
         for feed in self.feeds:
             # 分别获取元组中主题的名称和链接
             topic, url = feed[0], feed[1]
-            # 把抽取每个主题页面文章链接的任务交给自定义函数ParsePageContent()
-            self.ParsePageContent(topic, url, urls, count=0,count2=0,ccc=0)
-        #print urls
-        #exit(0)
+            # 把抽取每个主题页面文章链接的任务交给自定义函数ParsePageLinks()
+            self.ParsePageLinks(topic, url, urls, count=0,count2=0,ccc=0)
         # 返回提取到的所有文章列表
         return urls
 
     # 该自定义函数负责单个主题下所有文章链接的抽取，如有翻页则继续处理下一页
-    def ParsePageContent(self, topic, url, urls, count,count2,ccc):
-        # 请求主题页面链接并获取其内容
+    def ParsePageLinks(self, topic, url, urls, count,count2,ccc):
+        # 请求主题页面或章节列表页面的链接和内容
         result = self.GetResponseContent(url)
         # 如果请求成功，并且页面内容不为空
         if result.status_code == 200 and result.content:
-            # 将页面内容转换成BeatifulSoup对象
+            # 将主题或列表页面内容转换成BeatifulSoup对象
             soup = BeautifulSoup(result.content, 'lxml')
-            # 找出当前页面文章列表中所有文章条目
+            # 找出当前页面文章列表中所有文章条目，里面的标签参数需要手工修改确认
             items = soup.find_all(name='dd')
-
+            #获取总章节数，以便抓取最新章节，追更---应该有个函数能使用，可惜我不知道啊
             for ttt in items:
                 ccc += 1
 
@@ -73,49 +71,29 @@ class Fanren_Test(BaseFeedBook):
                 link = item.a.get('href') # 获取文章链接
                 link = BaseFeedBook.urljoin(url, link) # 合成文章链接
                 count += 1 # 统计当前已处理的文章条目
+                
                 # 如果处理的文章条目超过了设定数量则中止抽取，改动下面的条件限制，选择抓取方式，都屏蔽掉，则抓全部
                 count2 = count + self.max_articles_per_feed 
-                if count2 < ccc:                                                            #一、只抓最后几章
+                if count2 < ccc:                                                             #一、从最后抓n章
                     continue
                     
-                #if count > self.max_articles_per_feed:                                      #二、只抓前面几章
+                #if count > self.max_articles_per_feed:                                      #二、从前面抓n章
                 #    break
                 
-                # 如果文章发布日期超出了设定范围则忽略不处理
-                #if self.OutTimeRange(item):
-                #    continue
-                # 将符合设定文章数量和时间范围的文章信息作为元组加入列表
+                # 将符合设定文章数量的文章信息作为元组加入列表
                 urls.append((topic, title, link, None))
 
             # 如果主题页面有下一页，且已处理的文章条目未超过设定数量，则继续抓取下一页，递进调用自己
-            next = soup.find(name='a', string='Next')
-            if next and count < self.max_articles_per_feed:
-                url = BaseFeedBook.urljoin(url, next.get('href'))
-                self.ParsePageContent(topic, url, urls, count)
+            #next = soup.find(name='a', string='Next')
+            #if next and count < self.max_articles_per_feed:
+                #url = BaseFeedBook.urljoin(url, next.get('href'))
+                #self.ParsePageLinks(topic, url, urls, count)
         # 如果请求失败则打印在日志输出中
         else:
             self.log.warn('Fetch article failed(%s):%s' % \
                 (URLOpener.CodeMap(result.status_code), url))
 
     # 此函数负责判断文章是否超出指定时间范围，是返回 True，否则返回False
-    def OutTimeRange(self, item):
-        current = datetime.utcnow() # 获取当前时间
-        updated = item.find(name='b').string # 获取文章的发布时间
-        # 如果设定了时间范围，并且获取到了文章发布时间
-        if self.oldest_article > 0 and updated:
-            # 将文章发布时间字符串转换成日期对象
-            updated = datetime.strptime(updated, '%Y-%m-%d %H:%M')
-            delta = current - updated # 当前时间减去文章发布时间
-            # 将设定的时间范围转换成秒，小于等于365则单位为天，否则则单位为秒
-            if self.oldest_article > 365:
-                threshold = self.oldest_article # 以秒为单位的直接使用秒
-            else:
-                threshold = 86400 * self.oldest_article # 以天为单位的转换为秒
-            # 如果文章发布时间超出设定时间范围返回True
-            if (threshold < delta.days * 86400 + delta.seconds):
-                return True
-        # 如果设定时间范围为0，文章没超出设定时间范围（或没有发布时间），则返回False
-        return False
 
     # 清理文章URL附带字符
     def processtitle(self, title):
@@ -125,7 +103,7 @@ class Fanren_Test(BaseFeedBook):
     def preprocess(self, content):
         # 将页面内容转换成BeatifulSoup对象
         soup = BeautifulSoup(content, 'lxml')
-        # 调用处理内容分页的自定义函数SplitJointPagination()
+        # 调用处理内容分页的自定义函数 SplitJointPagination()
         content = self.SplitJointPagination(soup)
         # 返回预处理完成的内容
         return unicode(content)
