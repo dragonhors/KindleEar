@@ -8,14 +8,14 @@ from bs4 import BeautifulSoup # 导入BeautifulSoup处理模块
 
 # 返回此脚本定义的类名
 def getBook():
-    return Facebook
+    return BBC
 
 # 继承基类BaseFeedBook
-class Facebook(BaseFeedBook):
+class BBC(BaseFeedBook):
     # 设定生成电子书的元数据
-    title = u'FaceBook' # 设定标题
-    __author__ = u'XXX' # 设定作者
-    description = u'FaceBook' # 设定简介
+    title = u'BBC' # 设定标题
+    __author__ = u'BBC' # 设定作者
+    description = u'BBC' # 设定简介
     language = 'en' # 设定语言
 
     coverfile = 'cv_chinadaily.jpg' # 设定封面图片
@@ -24,24 +24,24 @@ class Facebook(BaseFeedBook):
     # 指定要提取的包含文章列表的主题页面链接
     # 每个主题是包含主题名和主题页面链接的元组
     feeds = [
-        (u'特朗普', 'https://www.facebook.com/search/top/?q=%E7%89%B9%E6%9C%97%E6%99%AE&epa=SEARCH_BOX'),
-        #(u'口语', 'https://language.chinadaily.com.cn/practice_tongue/'),
-        #(u'新闻','https://language.chinadaily.com.cn/audio_cd/'),
+        (u'国际', 'https://www.bbc.com/zhongwen/trad/world'),
+        (u'两岸', 'https://www.bbc.com/zhongwen/trad/chinese_news'),
+        (u'科技','https://www.bbc.com/zhongwen/trad/science'),
     ]
 
     page_encoding = 'utf-8' # 设定待抓取页面的页面编码
     fulltext_by_readability = False # 设定手动解析网页
 
     #删除---更多内容交叉链接--
-    #remove_tags_after = [
-    #    dict(class_='gy_box_txt2'),
+    remove_tags_after = [
+        dict(class_='tags-container'),
     #    #dict(class_='gy_box_txt3'),
-    #]
+    ]
  
     # 设定内容页需要保留的标签
-    #keep_only_tags = [
-    #    dict(name='p'),
-    #]
+    keep_only_tags = [
+        dict(name='p'),
+    ]
    
     max_articles_per_feed =40 # 设定每个主题下要最多可抓取的文章数量
     oldest_article =1 # 设定文章的时间范围。小于等于365则单位为天，否则单位为秒，0为不限制。
@@ -55,9 +55,7 @@ class Facebook(BaseFeedBook):
             topic, url = feed[0], feed[1]
             # 把抽取每个主题页面文章链接的任务交给自定义函数ParsePageContent()
             self.ParsePageContent(topic, url, urls, count=0)
-        #print urls             #这句代码干什么的？调试用？
-        #exit(0)                #也是调试代码？
-        # 返回提取到的所有文章列表
+         # 返回提取到的所有文章列表
         return urls
 
     # 该自定义函数负责单个主题下所有文章链接的抽取，如有翻页则继续处理下一页
@@ -69,7 +67,7 @@ class Facebook(BaseFeedBook):
             # 将页面内容转换成BeatifulSoup对象
             soup = BeautifulSoup(result.content, 'lxml')
             # 找出当前页面文章列表中所有文章条目
-            items = soup.find_all(name='div', class_='_6roy')
+            items = soup.find_all(name='div', class_='dove-item__body')
 
             # 循环处理每个文章条目
             for item in items:
@@ -81,8 +79,8 @@ class Facebook(BaseFeedBook):
                 if count > self.max_articles_per_feed:
                     break
                 # 如果文章发布日期超出了设定范围则忽略不处理
-                if self.OutTimeRange(item):
-                    continue
+                #if self.OutTimeRange(item):
+                #    continue
                 # 将符合设定文章数量和时间范围的文章信息作为元组加入列表
                 urls.append((topic, title, link, None))
 
@@ -95,26 +93,6 @@ class Facebook(BaseFeedBook):
         else:
             self.log.warn('Fetch article failed(%s):%s' % \
                 (URLOpener.CodeMap(result.status_code), url))
-
-    # 此函数负责判断文章是否超出指定时间范围，是返回 True，否则返回False
-    def OutTimeRange(self, item):
-        current = datetime.utcnow() # 获取当前时间
-        updated = item.find(name='p',class_='main_title3').string # 获取文章的发布时间
-        # 如果设定了时间范围，并且获取到了文章发布时间
-        if self.oldest_article > 0 and updated:
-            # 将文章发布时间字符串转换成日期对象
-            updated = datetime.strptime(updated, '%Y-%m-%d %H:%M')
-            delta = current - updated # 当前时间减去文章发布时间
-            # 将设定的时间范围转换成秒，小于等于365则单位为天，否则则单位为秒
-            if self.oldest_article > 365:
-                threshold = self.oldest_article # 以秒为单位的直接使用秒
-            else:
-                threshold = 86400 * self.oldest_article # 以天为单位的转换为秒
-            # 如果文章发布时间超出设定时间范围返回True
-            if (threshold < delta.days * 86400 + delta.seconds):
-                return True
-        # 如果设定时间范围为0，文章没超出设定时间范围（或没有发布时间），则返回False
-        return False
 
     # 清理文章URL附带字符
     def processtitle(self, title):
