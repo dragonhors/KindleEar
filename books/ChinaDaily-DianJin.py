@@ -33,17 +33,15 @@ class ChinaDaily2(BaseFeedBook):
     fulltext_by_readability = False # 设定手动解析网页
 
     #删除---更多内容交叉链接--
-    remove_tags_after = [
-        dict(class_='gy_box_txt2'),
-        #dict(class_='gy_box_txt3'),
-        ]
- 
+    #remove_tags_after = [dict(class_='gy_box_txt2')]
+    #remove_classes = ['gy_box_txt2'] # 清除标签的class属性为列表中内容的标签，为字符串列表 
     # 设定内容页需要保留的标签
     keep_only_tags = [
-        dict(name='p'),
+        #dict(name='p'),
+        dict(name='div',class_='mian_txt',id='Content')
     ]
    
-    max_articles_per_feed =40 # 设定每个主题下要最多可抓取的文章数量
+    max_articles_per_feed =20 # 设定每个主题下要最多可抓取的文章数量
     oldest_article =1 # 设定文章的时间范围。小于等于365则单位为天，否则单位为秒，0为不限制。
 
     # 提取每个主题页面下所有文章URL
@@ -69,7 +67,7 @@ class ChinaDaily2(BaseFeedBook):
             # 将页面内容转换成BeatifulSoup对象
             soup = BeautifulSoup(result.content, 'lxml')
             # 找出当前页面文章列表中所有文章条目
-            items = soup.find_all(name='div', class_='gy_box_txt')
+            items = soup.find_all(name='div', class_='gy_box')
 
             # 循环处理每个文章条目
             for item in items:
