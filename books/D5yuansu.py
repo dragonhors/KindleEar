@@ -16,6 +16,6 @@ class D5yuansu(BaseFeedBook):
     coverfile             = "cv_d5yuansu.jpg"
     network_timeout       = 60
     feeds = [
-            (u'D5大生活', 'http://d5ys.net/feed/', True),
+            (u'D5大生活', 'http://ww38.d5ys.net/feed/', True),
            ]
     
