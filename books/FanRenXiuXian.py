@@ -14,12 +14,12 @@ def getBook():
 class Fanren_Test(BaseFeedBook):
     # 设定生成电子书的元数据
     title = u'003.凡人修仙传仙界篇'                   # 设定订阅项目显示标题
-    __author__ = u'妄语'                  # 设定作者，目前未用到
-    description = u'妄语'       # 设定简介，订阅项目上显示
-    language = 'zh-cn'                    # 设定语言
+    __author__ = u'妄语'                              # 设定作者，目前未用到
+    description = u'妄语'                             # 设定简介，订阅项目上显示
+    language = 'zh-cn'                                # 设定语言
 
-    coverfile = 'cv_Fanren.jpg' # 设定封面图片
-    mastheadfile = 'mh_novelbook.gif' # 设定标头图片
+    #coverfile = 'cv_Fanren.jpg' # 设定封面图片
+    #mastheadfile = 'mh_novelbook.gif' # 设定标头图片
       
     # 指定要提取的包含文章列表的主题页面链接
     # 每个主题是包含主题名和主题页面链接的元组
@@ -27,17 +27,28 @@ class Fanren_Test(BaseFeedBook):
         (u'凡人修仙', 'https://www.xbiquge6.com/1_1203/'),
     ]
 
-    page_encoding = 'utf-8' # 设定待抓取页面的页面编码
-    fulltext_by_readability = False # 设定手动解析网页
+    page_encoding = 'utf-8'                             # 设定待抓取页面的页面编码
+    fulltext_by_readability = False                     # 设定手动解析网页
 
     # 设定内容页需要保留的标签
     keep_only_tags = [
         #dict(name='h1'),
         dict(name='div',id='content'),
     ]
+    #是否按星期投递，留空则每天投递，否则是一个星期字符串列表
+    #一旦设置此属性，则网页上设置的“星期推送”对此书无效
+    #'Monday','Tuesday',...,'Sunday'，大小写敏感
+    #比如设置为['Friday'] 或 ['Monday', 'Friday', 'Sunday']
+    deliver_days = ['Wendsday','Saturday']
+
+    #自定义书籍推送时间，一旦设置了此时间，则网页上设置的时间对此书无效
+    #用此属性还可以实现一天推送多次
+    #格式为整形列表，比如每天8点/18点推送，则设置为[8,18]
+    #时区则自动使用订阅者的时区
+    deliver_times = []
 
     max_articles_per_feed = 10 # 设定每个主题下要最多可抓取的文章数量
-    oldest_article = 1 # 设定文章的时间范围。小于等于365则单位为天，否则单位为秒，0为不限制。
+    #oldest_article = 1 # 设定文章的时间范围。小于等于365则单位为天，否则单位为秒，0为不限制。
 
     # 提取每个主题页面下所有文章URL
     def ParseFeedUrls(self):
