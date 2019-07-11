@@ -32,14 +32,13 @@ class Fanren_Test(BaseFeedBook):
 
     # 设定内容页需要保留的标签
     keep_only_tags = [
-        #dict(name='h1'),
         dict(name='div',id='content'),
     ]
     #是否按星期投递，留空则每天投递，否则是一个星期字符串列表
     #一旦设置此属性，则网页上设置的“星期推送”对此书无效
     #'Monday','Tuesday',...,'Sunday'，大小写敏感
-    #比如设置为['Friday'] 或 ['Monday', 'Friday', 'Sunday']
-    deliver_days = ['Wendsday','Saturday']
+    #比如设置为['Friday'] 或 ['Monday','Tuesday','Wednesday','Thursday','Friday', 'Sunday']
+    deliver_days = ['Wednesday','Saturday']
 
     #自定义书籍推送时间，一旦设置了此时间，则网页上设置的时间对此书无效
     #用此属性还可以实现一天推送多次
