@@ -37,13 +37,12 @@ class ChinaDaily2(BaseFeedBook):
     #remove_classes = ['gy_box_txt2'] # 清除标签的class属性为列表中内容的标签，为字符串列表 
     # 设定内容页需要保留的标签，恰当的选择标签，可以剔除不想要的内容。图片、文字、、、
     keep_only_tags = [
-        #dict(name='p'),
         dict(name='div',class_='mian_txt',id='Content')
     ]
    
     max_articles_per_feed =20 # 设定每个主题下要最多可抓取的文章数量
     oldest_article =7 # 设定文章的时间范围。小于等于365则单位为天，否则单位为秒，0为不限制。
-    deliver_days = ['Monday']   #每周一投递
+    deliver_days = ['Monday',]   #每周一投递
 
     # 提取每个主题页面下所有文章URL
     def ParseFeedUrls(self):
